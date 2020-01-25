@@ -5,14 +5,14 @@ with open("README.md", "r") as f:
 
 setuptools.setup(
     name="izitest",
-    version="1.0.0",
+    version="1.0.1",
     author="Kenji 'Nhqml' Gaillac",
     license="GNU GPLv3",
     description="Easily run an executable against a test suite",
     long_description=readme,
     long_description_content_type="text/markdown",
     url="https://github.com/nhqml/izitest",
-    packages=setuptools.find_packages(),
+    packages=setuptools.find_packages("izitest"),
     include_package_data=True,
     package_data={
         "izitest": [

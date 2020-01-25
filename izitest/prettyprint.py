@@ -7,7 +7,7 @@ from typing import List, TextIO
 
 from enum import Enum
 
-from sys import stdout, stderr
+from sys import (stdout as STDOUT, stderr as STDERR)
 
 from termcolor import colored  # pylint: disable=import-error
 
@@ -27,7 +27,7 @@ class Color(Enum):
     WHITE = "white"
 
 
-def prettyprint(text: str, color: Color = Color.WHITE, out: TextIO = stdout, bold=True, dark=False,
+def prettyprint(text: str, color: Color = Color.WHITE, out: TextIO = STDOUT, bold=True, dark=False,
                 underline=False, blink=False, indent=0, end='\n'):
     """Awesome print.
 
@@ -56,5 +56,5 @@ def prettyprint(text: str, color: Color = Color.WHITE, out: TextIO = stdout, bol
     if blink:
         attrs.append("blink")
 
-    print(f"{' ' * 2 * indent}", end='')
+    print(f"{' ' * 2 * indent}", file=out, end='')
     print(colored(text, color.value, attrs=attrs), file=out, end=end)
