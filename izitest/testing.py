@@ -8,6 +8,7 @@ from sys import (stdout as STDOUT, stderr as STDERR)
 from sys import exit
 
 from pathlib import Path
+from argparse import Namespace
 
 import subprocess as sp
 
@@ -167,11 +168,18 @@ def run_testcase(testcase: dict, exec: List[str], ref: List[str]):
             prettyprint("Passed", Color.GREEN)
         else:
             prettyprint("Failed", Color.RED)
+            # TODO make a report of diffs
             # if diff != '':
             #     print(diff)
 
 
-def run_testsuite(args, testfiles: List[Path]):
+def run_testsuite(args: Namespace, testfiles: List[Path]) -> None:
+    """Runs the testsuite according to passed args.
+
+    Args:
+        args (Namespace): parsed arguments
+        testfiles (List[Path]): list of test files
+    """
     if not testfiles:
         prettyprint("Nothing to test!")
     else:
