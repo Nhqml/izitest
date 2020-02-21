@@ -7,7 +7,7 @@ Welcome to izitest's documentation!
 
    intro
    modules
-   examples
+   usage
 
 Indices and tables
 ==================

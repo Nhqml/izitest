@@ -201,7 +201,7 @@ def run_testsuite(args: Namespace, testfiles: List[Path]) -> None:
             continue
 
         for testcase in tests:
-            if testcase.get("name", '') == '':
+            if testcase is None or testcase.get("name", '') == '':
                 prettyprint("Test without name...", Color.CYAN, bold=False, indent=2, end=' ')
                 prettyprint("Skipped", Color.YELLOW)
                 continue

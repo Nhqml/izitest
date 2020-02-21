@@ -1,0 +1,38 @@
+- name: 'Bash command'
+  desc: 'Bash ''-c'' (command) option'
+
+  # Args to APPEND before execution (which means that args
+  # passed through CLI WILL NOT be replaced)
+  args:
+    - '-c'
+    - 'echo -n'
+
+  stdin: ''
+
+  # If 'expect' is present, it will fake the execution
+  expect:
+    stdout: ''
+    stderr: ''
+    retcode: 0
+
+  timeout: 10
+
+  skip: False
+
+  tests:
+    # Exact same outputs
+    - 'same_stdout'
+    - 'same_stderr'
+    - 'same_retcode'
+
+    # Same number of lines in outputs
+    - 'same_stdout_size'
+    - 'same_stderr_size'
+
+    # Test if anything was outputed
+    # - 'has_stdout'
+    # - 'has_stderr'
+
+    # Test if nothing was outputed
+    - 'has_no_stdout'
+    - 'has_no_stderr'
