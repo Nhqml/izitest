@@ -5,7 +5,7 @@ with open("README.md", "r") as f:
 
 setuptools.setup(
     name="izitest",
-    version="1.0.1",
+    version="1.0.2",
     author="Kenji 'Nhqml' Gaillac",
     license="GNU GPLv3",
     description="Easily run an executable against a test suite",
