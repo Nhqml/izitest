@@ -1,5 +1,5 @@
 izitest - An easy test suite
-===========================
+============================
 
 .. image:: https://img.shields.io/github/license/nhqml/izitest
    :target: https://github.com/Nhqml/izitest/blob/master/LICENSE

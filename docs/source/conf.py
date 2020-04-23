@@ -22,7 +22,7 @@ copyright = "2020, Kenji 'Nhqml' Gaillac"
 author = "Kenji 'Nhqml' Gaillac"
 
 # The full version, including alpha/beta/rc tags
-release = '2.0.0.a1'
+release = '2.0.0'
 
 
 # -- General configuration ---------------------------------------------------
