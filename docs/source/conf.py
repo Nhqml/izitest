@@ -22,7 +22,7 @@ copyright = "2020, Kenji 'Nhqml' Gaillac"
 author = "Kenji 'Nhqml' Gaillac"
 
 # The full version, including alpha/beta/rc tags
-release = '1.0.1'
+release = '2.0.0.a1'
 
 
 # -- General configuration ---------------------------------------------------
@@ -37,6 +37,7 @@ extensions = [
     'sphinx.ext.coverage',
     'sphinx.ext.doctest',
     'sphinx.ext.todo',
+    'sphinx.ext.autosectionlabel'
 ]
 
 # Add any paths that contain templates here, relative to this directory.

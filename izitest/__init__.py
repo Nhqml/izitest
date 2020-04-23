@@ -1,10 +1,8 @@
-# -*- coding: utf-8 -*-
+# coding: utf-8
 
-from .parser import parse_args
-from .testing import (discover_testsuite, run_testsuite)
+from .testsuite import (Testsuite, init_testsuite)
 
 __all__ = [
-    "parse_args",
-    "discover_testsuite",
-    "run_testsuite"
+    "Testsuite",
+    "init_testsuite",
 ]

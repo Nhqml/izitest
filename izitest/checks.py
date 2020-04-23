@@ -1,21 +1,42 @@
-# -*- coding: utf-8 -*-
+# coding: utf-8
 
-"""Module that cointains all tests.
+"""Module that contains all checks.
 
-| Test functions takes two arguments:
+| Check functions takes two arguments:
 | - **ref** the CompletedProcess of reference
-| - **test** the tested process
+| - **test** the CompletedProcess of tested executable
 
 | They return a tuple **(bool, str)**:
 | - the boolean indicates if the test was successful
 | - the string represents the difference of what is tested between **ref** and **test**
 """
 
-from typing import List, TextIO
+from typing import (List, Tuple, TextIO)
 
 from subprocess import CompletedProcess
 
 from difflib import unified_diff
+
+__all__ = [
+    "run_check"
+]
+
+
+def run_check(check: str, ref: CompletedProcess, test: CompletedProcess) -> Tuple[bool, str]:
+    """Run the test named `check` (located in this file).
+
+    Args:
+        check (str): name of the check function.
+        ref (CompletedProcess): reference executable.
+        test (CompletedProcess): tested executable.
+
+    Returns:
+        bool: True if the test succeed, False otherwise.
+        str: diff between two outputs.
+    """
+
+    fn_test = globals()[check]
+    return fn_test(ref, test)
 
 
 def __diff(ref: str, test: str) -> str:
@@ -36,7 +57,7 @@ def __diff(ref: str, test: str) -> str:
     return diff
 
 
-def same_stdout(ref: CompletedProcess, test: CompletedProcess) -> (bool, str):
+def same_stdout(ref: CompletedProcess, test: CompletedProcess) -> Tuple[bool, str]:
     """Compare stdout of the two CompletedProcess, succeed if both are identical.
 
     Args:
@@ -52,7 +73,7 @@ def same_stdout(ref: CompletedProcess, test: CompletedProcess) -> (bool, str):
     return (diff == '', diff)
 
 
-def same_stderr(ref: CompletedProcess, test: CompletedProcess) -> (bool, str):
+def same_stderr(ref: CompletedProcess, test: CompletedProcess) -> Tuple[bool, str]:
     """Compare stderr of the two CompletedProcess, succeed if both are identical.
 
     Args:
@@ -69,7 +90,7 @@ def same_stderr(ref: CompletedProcess, test: CompletedProcess) -> (bool, str):
     return (diff == '', diff.strip('\n'))
 
 
-def same_retcode(ref: CompletedProcess, test: CompletedProcess) -> (bool, str):
+def same_retcode(ref: CompletedProcess, test: CompletedProcess) -> Tuple[bool, str]:
     """Compare return code of the two CompletedProcess, succeed if both are identical.
 
     Args:
@@ -83,10 +104,10 @@ def same_retcode(ref: CompletedProcess, test: CompletedProcess) -> (bool, str):
     if ref.returncode == test.returncode:
         return (True, '')
     else:
-        return (False, f"returned {test.returncode}, expected {ref.returncode}")
+        return (False, f"expected {ref.returncode}, got {test.returncode}")
 
 
-def same_stdout_size(ref: CompletedProcess, test: CompletedProcess) -> (bool, str):
+def same_stdout_size(ref: CompletedProcess, test: CompletedProcess) -> Tuple[bool, str]:
     """Compare stdout's number of line of the two CompletedProcess, succeed if both are identical.
 
     Args:
@@ -103,7 +124,7 @@ def same_stdout_size(ref: CompletedProcess, test: CompletedProcess) -> (bool, st
         return (False, __diff(ref.stdout, test.stdout))
 
 
-def same_stderr_size(ref: CompletedProcess, test: CompletedProcess) -> (bool, str):
+def same_stderr_size(ref: CompletedProcess, test: CompletedProcess) -> Tuple[bool, str]:
     """Compare stderr's number of line of the two CompletedProcess, succeed if both are identical.
 
     Args:
@@ -121,8 +142,8 @@ def same_stderr_size(ref: CompletedProcess, test: CompletedProcess) -> (bool, st
         return (False, __diff(ref.stderr, test.stderr.strip('\n')))
 
 
-def has_stdout(ref: CompletedProcess, test: CompletedProcess) -> (bool, str):
-    """Test if tested executable outputed anything on stdout.
+def has_stdout(ref: CompletedProcess, test: CompletedProcess) -> Tuple[bool, str]:
+    """Test if tested executable outputted anything on stdout.
 
     Args:
         ref (CompletedProcess): reference executable
@@ -138,8 +159,8 @@ def has_stdout(ref: CompletedProcess, test: CompletedProcess) -> (bool, str):
     return (test.stdout != '', '')
 
 
-def has_stderr(ref: CompletedProcess, test: CompletedProcess) -> (bool, str):
-    """Test if tested executable outputed anything on stderr.
+def has_stderr(ref: CompletedProcess, test: CompletedProcess) -> Tuple[bool, str]:
+    """Test if tested executable outputted anything on stderr.
 
     Args:
         ref (CompletedProcess): reference executable
@@ -155,8 +176,8 @@ def has_stderr(ref: CompletedProcess, test: CompletedProcess) -> (bool, str):
     return (test.stderr != '', '')
 
 
-def has_no_stdout(ref: CompletedProcess, test: CompletedProcess) -> (bool, str):
-    """Test if tested executable outputed nothing on stdout.
+def has_no_stdout(ref: CompletedProcess, test: CompletedProcess) -> Tuple[bool, str]:
+    """Test if tested executable outputted nothing on stdout.
 
     Args:
         ref (CompletedProcess): reference executable
@@ -172,8 +193,8 @@ def has_no_stdout(ref: CompletedProcess, test: CompletedProcess) -> (bool, str):
     return (test.stdout == '', '')
 
 
-def has_no_stderr(ref: CompletedProcess, test: CompletedProcess) -> (bool, str):
-    """Test if tested executable outputed nothing on stderr.
+def has_no_stderr(ref: CompletedProcess, test: CompletedProcess) -> Tuple[bool, str]:
+    """Test if tested executable outputted nothing on stderr.
 
     Args:
         ref (CompletedProcess): reference executable

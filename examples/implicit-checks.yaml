@@ -1,0 +1,9 @@
+---
+
+- name: 'A basic test'
+  checks:
+    - 'same_stdout'
+    - 'same_stderr'
+    - 'same_retcode'
+
+- name: 'Same test but with implicit checks'

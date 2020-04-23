@@ -6,8 +6,8 @@ Welcome to izitest's documentation!
    :caption: Contents:
 
    intro
-   modules
    usage
+   help
 
 Indices and tables
 ==================

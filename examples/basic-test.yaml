@@ -1,25 +1,30 @@
-- name: 'Bash command'
-  desc: 'Bash ''-c'' (command) option'
+---
+
+- name: 'Command option'
+  desc: 'Test bash ''-c'' option'
 
   # Args to APPEND before execution (which means that args
   # passed through CLI WILL NOT be replaced)
   args:
     - '-c'
-    - 'echo -n'
+    - 'echo -n Hello World!'
 
   stdin: ''
 
-  # If 'expect' is present, it will fake the execution
+  # If 'expect' is present, it will fake the execution of a 'ref' executable
   expect:
-    stdout: ''
+    stdout: 'Hello World!'
     stderr: ''
     retcode: 0
 
-  timeout: 10
+  # Maximum amount of time (in seconds) for the execution
+  timeout: 3
 
+  # If True, the test will be skipped
   skip: False
 
-  tests:
+  # Checks to perform
+  checks:
     # Exact same outputs
     - 'same_stdout'
     - 'same_stderr'
@@ -29,10 +34,10 @@
     - 'same_stdout_size'
     - 'same_stderr_size'
 
-    # Test if anything was outputed
+    # Test if anything was outputted
     # - 'has_stdout'
     # - 'has_stderr'
 
-    # Test if nothing was outputed
-    - 'has_no_stdout'
+    # Test if nothing was outputted
+    # - 'has_no_stdout'
     - 'has_no_stderr'

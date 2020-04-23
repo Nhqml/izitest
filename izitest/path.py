@@ -1,11 +1,12 @@
-from typing import List, TextIO
+# coding: utf-8
+
+from typing import (List, TextIO)
 
 import os
+from sys import stdout, stderr
 from pathlib import Path
 
-from sys import stdout, stderr
-
-from izitest.prettyprint import (prettyprint, Color)
+from .betterprint import printerror
 
 __all__ = [
     "check_file",
@@ -14,7 +15,7 @@ __all__ = [
 ]
 
 
-def check_file(path: Path) -> None:
+def check_file(path: Path):
     """Check if given path points to a regular file.
 
     Args:
@@ -24,11 +25,11 @@ def check_file(path: Path) -> None:
         Exception: if not a regular file
     """
     if not path.is_file():
-        prettyprint(f"{path} is not a valid file!", Color.RED, out=stderr)
+        printerror(f"{path} is not a valid file!")
         raise Exception
 
 
-def check_exec(path: Path) -> None:
+def check_exec(path: Path):
     """Check if given path points to a regular file.
 
     Args:
@@ -38,11 +39,11 @@ def check_exec(path: Path) -> None:
         Exception: if not a regular file
     """
     if not os.access(path, os.X_OK):
-        prettyprint(f"{path} is not executable!", Color.RED, out=stderr)
+        printerror(f"{path} is not executable!")
         raise Exception
 
 
-def check_dir(path: Path) -> None:
+def check_dir(path: Path):
     """Check if given path points to a regular file.
 
     Args:
@@ -52,5 +53,5 @@ def check_dir(path: Path) -> None:
         Exception: if not a regular file
     """
     if not path.is_dir():
-        prettyprint(f"{path} is not a valid directory!", Color.RED, out=stderr)
+        printerror(f"{path} is not a valid directory!")
         raise Exception

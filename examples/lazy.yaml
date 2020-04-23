@@ -1,0 +1,8 @@
+---
+
+# Minimal test definition
+- name: "Just a named test"
+
+# Minimal test definition if you don't provide a ref executable
+- name: "What a lazy test"
+  expect:

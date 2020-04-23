@@ -1,0 +1,24 @@
+---
+
+- name: 'Working test'
+  desc: 'Make sure the program is successful and does not output anything'
+
+  expect:
+    stdout: ''
+    stderr: ''
+    retcode: 0
+
+  checks:
+    - 'same_stdout' # equivalent to has_no_stdout in this case
+    - 'same_stderr'
+    - 'same_retcode'
+
+- name: 'Same working test'
+  desc: 'Same test as above but using default expect values'
+
+  expect:
+
+  checks:
+    - 'same_stdout' # equivalent to has_no_stdout in this case
+    - 'same_stderr'
+    - 'same_retcode'
