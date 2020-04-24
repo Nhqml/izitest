@@ -36,12 +36,15 @@ class Testfile(object):
     def __repr__(self):
         return f"{self.path} {self.tests}"
 
-    def run(self, ref: List[str], exec: List[str]):
+    def run(self, ref: List[str], exec: List[str]) -> int:
         """Run all tests in the Testfile
 
         Args:
             exec (List[str]): tested executable.
             ref (List[str]): reference executable.
+
+        Returns:
+            int: the return code of the Testfile (0 if "Passed" or "Skipped", 1 otherwise)
         """
         printinfo("Running tests in", indent=1, end=' ')
         prettyprint(str(self.path), Color.BLUE, bold=True)
@@ -49,5 +52,9 @@ class Testfile(object):
         if len(self.tests) == 0:
             printwarning("No test to run", indent=2)
 
+        status: int = 0
         for t in self.tests:
-            t.run(ref, exec)
+            if t.run(ref, exec) == 1:
+                status = 1
+
+        return status

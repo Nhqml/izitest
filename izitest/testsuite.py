@@ -87,12 +87,18 @@ class Testsuite(object):
             f"Testfiles: {list(str(f) for f in self.testfiles)}\n" + \
             f"Status: {self.status}"
 
-    def run(self):
+    def run(self) -> int:
         """Run the Testsuite.
+
+        Returns:
+            int: the return code of the Testsuite (0 if "Passed" or "Skipped", 1 otherwise)
         """
         printinfo("Running Testsuite")
+
+        status: int = 0
         for tf in self.testfiles:
-            tf.run(self.ref, self.exec)
+            if tf.run(self.ref, self.exec) == 1:
+                status = 1
 
         if self.report is not None:
             self.retrieve_status()
@@ -105,6 +111,8 @@ class Testsuite(object):
 
             with open(self.report, 'w') as f:
                 f.write(report)
+
+        return status
 
     def retrieve_status(self):
         """Retrieve Testsuite status.

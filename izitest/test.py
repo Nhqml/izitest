@@ -55,7 +55,7 @@ class Test(object):
         return f"{self.name}{f' {self.args}' if self.args else ''}" + \
             f"{self.testcases if len(self.testcases) > 0 else ''}"
 
-    def run(self, ref: List[str], exec: List[str]):
+    def run(self, ref: List[str], exec: List[str]) -> int:
         """Run the Test.
 
         It will run both tested and reference executable before performing
@@ -64,6 +64,9 @@ class Test(object):
         Args:
             exec (List[str]): tested executable.
             ref (List[str]): reference executable.
+
+        Returns:
+            int: the return code of the Test (0 if "Passed" or "Skipped", 1 otherwise)
         """
         printinfo("Test", indent=2, end=' ')
         prettyprint(self.name, Color.CYAN, bold=True)
@@ -71,7 +74,7 @@ class Test(object):
         if self.skip:
             self.status = "Skipped"
             printstatus(self.status, indent=3)
-            return
+            return 0
 
         ref_proc: CompletedProcess
         test_proc: CompletedProcess
@@ -81,26 +84,28 @@ class Test(object):
         elif ref is None:
             self.status = "Skipped"
             printwarning("No ref exec", bold=True, indent=3)
-            return
+            return 0
         else:
             try:
                 ref_proc = run_exec(ref + self.args, self.stdin, self.timeout)
             except TimeoutExpired:
                 self.status = "Timed out"
                 printerror("Ref executable timed out", indent=3)
-                return
+                return 1
 
         try:
             test_proc = run_exec(exec + self.args, self.stdin, self.timeout)
         except TimeoutExpired:
             self.status = "Timed out"
             printerror("Tested executable timed out", indent=3)
-            return
+            return 1
 
         for tc in self.testcases:
             tc.check(ref_proc, test_proc)
 
         self.status = "Failed" if any(tc.status == "Failed" for tc in self.testcases) else "Passed"
+
+        return 0 if self.status == "Passed" else 1
 
 
 def run_exec(exec: List[str], stdin: str, timeout: int) -> CompletedProcess:
