@@ -8,7 +8,7 @@ with open("requirements.txt", 'r') as f:
 
 setup(
     name="izitest",
-    version="2.0.0",
+    version="2.0.1",
     author="Kenji 'Nhqml' Gaillac",
     author_email="kenji.gaillac@epita.fr",
     license="GNU GPLv3",

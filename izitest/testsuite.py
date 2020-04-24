@@ -9,6 +9,8 @@ from argparse import ArgumentParser
 
 from jinja2 import (Environment, PackageLoader, select_autoescape)
 
+import izitest.betterprint
+
 from .betterprint import *
 from .path import *
 from .testfile import *
@@ -51,6 +53,9 @@ class Testsuite(object):
         self.report: Path = report
 
         self.quiet: bool = quiet
+        if self.quiet:
+            izitest.betterprint.G_QUIET = True
+
         self.memcheck: bool = memcheck
         self.cat: List[str] = cat
 

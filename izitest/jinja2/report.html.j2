@@ -26,12 +26,13 @@
 
     <ul class="list-group pb-4">
     {% for tf in testsuite.testfiles %}
+      {% set tfloop = loop %}
       <li class="list-group-item py-2">
       {% if tf.tests|length > 0 %} {# Testfile contains Tests #}
         <code class="pb-2 text-info h5">{{ tf.path }}</code>
         {% for t in tf.tests %}
         {% if "Passed" in t.status or "Failed" in t.status %} {# Test has Tescases #}
-          <a class="btn btn-lg btn-block text-left shadow-none p-0 m-0" data-toggle="collapse" href="#testcase{{ loop.index }}" role="button" aria-expanded="false" aria-controls="testcase{{ loop.index }}">
+          <a class="btn btn-lg btn-block text-left shadow-none p-0 m-0" data-toggle="collapse" href="#testcase{{ tfloop.index }}-{{ loop.index }}" role="button" aria-expanded="false" aria-controls="testcase{{ tfloop.index }}-{{ loop.index }}">
           {% if "Passed" in t.status %}
             <span class="badge badge-success">{{ t.status }}</span>
           {% elif "Failed" in t.status %}
@@ -39,7 +40,7 @@
           {% endif %}
             <span>{{ t.name }}</span><span class="h6 font-italic">{{ " - " + t.desc if t.desc }}</span>
           </a>
-          <div class="collapse p-0 list-group" id="testcase{{ loop.index }}">
+          <div class="collapse p-0 list-group" id="testcase{{ tfloop.index }}-{{ loop.index }}">
             <div class="list-group-item">
             {% for tc in t.testcases %}
               <div>

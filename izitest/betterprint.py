@@ -18,6 +18,8 @@ __all__ = [
     "printstatus"
 ]
 
+G_QUIET = False
+
 
 class Color(Enum):
     GREY = "grey"
@@ -45,6 +47,8 @@ def prettyprint(text: str, color=Color.WHITE, out=STDOUT, bold=False, dark=False
         indent (int, optional): indentation level. Default is 0. Increase by 2 spaces for each level.
         end (str, optional): end - same as for standard print function. Default is '\n'.
     """
+    if G_QUIET:
+        return
 
     attrs: List[str] = []
     if bold:
@@ -65,6 +69,9 @@ def printinfo(text: str, bold=False, indent=0, end='\n'):
 
     See prettyprint.
     """
+    if G_QUIET:
+        return
+
     prettyprint(text, Color.WHITE, STDOUT, bold=bold, indent=indent, end=end)
 
 
@@ -73,6 +80,9 @@ def printwarning(text: str, bold=False, indent=0, end='\n'):
 
     See prettyprint.
     """
+    if G_QUIET:
+        return
+
     prettyprint(text, Color.YELLOW, STDOUT, bold=bold, indent=indent, end=end)
 
 
@@ -81,6 +91,9 @@ def printerror(text: str, indent=0, end='\n'):
 
     See prettyprint.
     """
+    if G_QUIET:
+        return
+
     prettyprint(text, Color.RED, STDERR, indent=indent, end=end)
 
 
@@ -89,6 +102,9 @@ def printstatus(status: str, indent=0, end='\n'):
 
     See prettyprint.
     """
+    if G_QUIET:
+        return
+
     if (status == "Passed"):
         color = Color.GREEN
     elif (status == "Failed"):
