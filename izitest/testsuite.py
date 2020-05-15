@@ -162,15 +162,13 @@ def init_testsuite() -> Testsuite:
 
     args = parser.parse_args()
 
+    check_dir(args.testdir)
+
     args.exec = args.exec.split(' ')
-    execpath: Path = Path(args.exec[0])
-    check_file(execpath) and check_exec(execpath)
+    args.exec[0] = which(args.exec[0])
 
     if args.ref is not None:
         args.ref = args.ref.split(' ')
-        refpath: Path = Path(args.ref[0])
-        check_file(refpath) and check_exec(refpath)
-
-    check_dir(args.testdir)
+        args.ref[0] = which(args.ref[0])
 
     return Testsuite(args.exec, args.testdir, args.ref, args.quiet, args.memcheck, args.cat, args.report)

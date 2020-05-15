@@ -1,7 +1,7 @@
 ---
 
-- name: 'Command option'
-  desc: 'Test bash ''-c'' option'
+- name: 'Command option' # Name of the test
+  desc: 'Test bash ''-c'' option' # An optional description
 
   # Args to APPEND before execution (which means that args
   # passed through CLI WILL NOT be replaced)

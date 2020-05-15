@@ -9,48 +9,44 @@ from pathlib import Path
 from .betterprint import printerror
 
 __all__ = [
-    "check_file",
-    "check_exec",
-    "check_dir"
+    "which",
+    "check_dir",
 ]
 
 
-def check_file(path: Path):
-    """Check if given path points to a regular file.
+def which(command: str) -> str:
+    """Return the absolute path to the command.
 
     Args:
-        path (Path): path to check
+        command (str): command to resolve
+
+    Returns:
+        str: absolute path
 
     Raises:
-        Exception: if not a regular file
+        Exception: if the path cannot be resolved
     """
-    if not path.is_file():
-        printerror(f"{path} is not a valid file!")
-        raise Exception
+    abs_path = Path(command).absolute()
+    if Path(command).exists():
+        return str(abs_path)
 
+    for path in os.getenv("PATH").split(os.pathsep):
+        abs_path = Path(path, command)
+        if abs_path.is_file() and os.access(abs_path, os.X_OK):
+            return str(abs_path)
 
-def check_exec(path: Path):
-    """Check if given path points to a regular file.
-
-    Args:
-        path (Path): path to check
-
-    Raises:
-        Exception: if not a regular file
-    """
-    if not os.access(path, os.X_OK):
-        printerror(f"{path} is not executable!")
-        raise Exception
+    printerror(f"{command} is not a valid command!")
+    raise Exception
 
 
 def check_dir(path: Path):
-    """Check if given path points to a regular file.
+    """Check if given path points to a directory.
 
     Args:
         path (Path): path to check
 
     Raises:
-        Exception: if not a regular file
+        Exception: if not a directory
     """
     if not path.is_dir():
         printerror(f"{path} is not a valid directory!")
