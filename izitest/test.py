@@ -2,7 +2,7 @@
 
 from typing import (List, Dict, Any)
 
-from subprocess import (CompletedProcess, TimeoutExpired, run as sprun)
+from subprocess import (CompletedProcess, TimeoutExpired, run as sprun, PIPE)
 
 from .betterprint import *
 from .testcase import *
@@ -122,7 +122,10 @@ def run_exec(exec: List[str], stdin: str, timeout: int) -> CompletedProcess:
     Raises:
         TimeoutExpired: if the timeout expired.
     """
-    return sprun(exec, input=stdin, capture_output=True, timeout=timeout, text=True)
+    try:  # Python >= 3.7
+        return sprun(exec, input=stdin, timeout=timeout, capture_output=True, text=True)
+    except:  # Python < 3.7
+        return sprun(exec, input=stdin, timeout=timeout, stdout=PIPE, stderr=PIPE, universal_newlines=True)
 
 
 def fake_run_exec(expect: Dict[str, Any]) -> CompletedProcess:

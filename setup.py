@@ -3,12 +3,9 @@ from setuptools import (setup, find_packages)
 with open("README.rst", 'r') as f:
     readme = f.read()
 
-with open("requirements.txt", 'r') as f:
-    requirements = f.read()
-
 setup(
     name="izitest",
-    version="2.0.3",
+    version="2.0.4",
     author="Kenji 'Nhqml' Gaillac",
     author_email="kenji.gaillac@epita.fr",
     license="GNU GPLv3",
@@ -39,5 +36,9 @@ setup(
         "Operating System :: OS Independent",
     ],
     python_requires='>=3.6',
-    install_requires=requirements.splitlines(),
+    install_requires=[
+        "PyYAML >= 5.3",
+        "termcolor >= 1.1.0",
+        "Jinja2 >= 2.11.1",
+    ],
 )
